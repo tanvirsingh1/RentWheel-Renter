@@ -1,20 +1,94 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, Button} from 'react-native';
+import { useState } from "react"
+//import SegmentedControl from '@react-native-segmented-control/segmented-control';
 
-export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working onqq your app!</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
+import { Ionicons } from '@expo/vector-icons';
+import { FontAwesome5 } from '@expo/vector-icons';
+
+import { NavigationContainer } from '@react-navigation/native';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+
+import { createStackNavigator } from '@react-navigation/stack';
+
+import 'react-native-gesture-handler';
+
+import LoginScreen from './Screens/Login';
+import ReservationsScreen from './Screens/ReservationsScreen';
+import SearchScreen from './Screens/SearchScreen';
+
+import { auth } from './firebaseConfig';
+import { signOut } from "firebase/auth";
+
+const Stack = createStackNavigator();
+const Tab = createBottomTabNavigator();
+
+const logoutPressed = async (navigation) => {
+  // TODO: Code to logout
+  console.log("Logging the user out..")
+  try {
+      if (auth.currentUser === null) {
+          console.log("logoutPressed: There is no user to logout!")
+      } 
+      else {
+          await signOut(auth)
+          console.log("logoutPressed: Logout complete")
+          alert("logout complete!")
+          navigation.navigate("Login")
+      }
+  } catch(error) {
+      console.log("ERROR when logging out")
+      console.log(error)
+  }            
 }
 
+const TabContainerComponent = () => {
+  
+  return (
+    <Tab.Navigator screenOptions={({ route }) => ({
+      tabBarIcon: ({ focused, color, size }) => {
+        if (route.name == "My Reservations") {
+            return (
+              <Ionicons name="receipt" size={24} color="black" />
+            );
+        }
+        if (route.name === "Search") {
+            return (
+              <FontAwesome5 name="history" size={24} color="black" />
+            );
+        }
+      },
+    tabBarActiveTintColor: "green",
+    tabBarInactiveTintColor: "gray",
+})}>
+      <Tab.Screen name="My Reservations" component={ReservationsScreen} />
+      <Tab.Screen name="Search" component={SearchScreen}  />
+   </Tab.Navigator>
+  )
+}
+
+export default function App() {
+ 
+  return ( 
+      < NavigationContainer>
+         <Stack.Navigator>    
+        <Stack.Screen name="Login" component={LoginScreen}/>
+        <Stack.Screen name="Rent a Wheel" component={TabContainerComponent} options={({ navigation }) => ({
+            headerRight: () => (
+              <View style={{ margin: 10 }}>
+                <Button title="Logout" onPress={() => logoutPressed(navigation)} />
+              </View>
+            ),
+            headerLeft: null, // If you want to remove the back button, set this to null
+          })}/>
+         
+      </Stack.Navigator>
+         
+        </NavigationContainer>
+  )
+}
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
+  
+ 
 });
+ 
+ 
