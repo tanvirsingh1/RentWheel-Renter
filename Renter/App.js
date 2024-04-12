@@ -1,9 +1,7 @@
 import { StyleSheet, Text, View, Button} from 'react-native';
-import { useState } from "react"
-//import SegmentedControl from '@react-native-segmented-control/segmented-control';
 
-import { Ionicons } from '@expo/vector-icons';
-import { FontAwesome5 } from '@expo/vector-icons';
+import { Fontisto } from '@expo/vector-icons';
+import { FontAwesome } from '@expo/vector-icons';
 
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -48,12 +46,12 @@ const TabContainerComponent = () => {
       tabBarIcon: ({ focused, color, size }) => {
         if (route.name == "My Reservations") {
             return (
-              <Ionicons name="receipt" size={24} color="black" />
+              <Fontisto name="history" size={24} color="black" />
             );
         }
         if (route.name === "Search") {
             return (
-              <FontAwesome5 name="history" size={24} color="black" />
+              <FontAwesome name="search" size={24} color="black" />
             );
         }
       },
