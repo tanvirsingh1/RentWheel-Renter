@@ -19,17 +19,21 @@ const CarSummaryScreen = ({route}) => {
 
     const handleBooking = async () => {
 
+      const confirmationCode = Math.floor(Math.random() * 900000) + 100000;
+
         const bookingToInsert = {
             Date: nextDate,
             Status: 'confirmed',
             listingId: carDetails.id,
             renterId: auth.currentUser.uid,
-            ownerId: carDetails.ownerId
+            ownerId: carDetails.ownerId,
+            pricePaid: (parseFloat(carDetails.price * 1.13)).toFixed(2),
+            confirmationCode: confirmationCode
         }
 
         try {
             const docRef = await addDoc(collection(db, "Reservation"), bookingToInsert)
-            alert(`Your booking rent the car for tommorow is confirmed.\nPick up date: ${nextDate}\nPick up time: 8am to 11am\nDrop off time: 8pm to 11pm`)
+            alert(`Your booking to rent the car for tommorow is confirmed.\nPick up date: ${nextDate}\nPick up time: 8am to 11am\nDrop off time: 8pm to 11pm`)
             console.log(`Id of inserted document is: ${docRef.id}`)
         } catch (err) {
             console.log(err)
