@@ -1,6 +1,6 @@
 import React from 'react';
 import {useState, useEffect} from "react"
-import { View, Text, StyleSheet, Button } from 'react-native';
+import { View, Text, StyleSheet, Button, Image, ScrollView } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
 import { collection, addDoc, getDocs } from "firebase/firestore"
 import { db, auth } from '../firebaseConfig';
@@ -9,8 +9,6 @@ const CarSummaryScreen = ({route}) => {
 
     const {carDetails} = route.params
     const [nextDate, setNextDate] = React.useState(null);
-
-    console.log(carDetails)
 
     useEffect(() => {
         const today = new Date();
@@ -39,20 +37,36 @@ const CarSummaryScreen = ({route}) => {
 
     }
 
-
   return (
     <View style={styles.container}>
         <MapView style={{height:"40%", width:"100%"}}>
             <Marker coordinate={{latitude: carDetails.latitude, longitude: carDetails.longitude}}></Marker>
         </MapView>
-        <Text style={styles.details}>Car Model: {carDetails.carModel}</Text>
+        
+        <ScrollView style={styles.detailsContainer}>
+          <Text style={styles.text}>Make: {carDetails.carMake}</Text>
+          <Text style={styles.text}>Model: {carDetails.carModel}</Text>
+          <Text style={styles.text}>Color: {carDetails.color}</Text>
+          <Text style={styles.text}>Year: {carDetails.year}</Text>
+          <Text style={styles.text}>Capacity: {carDetails.capacity}</Text>
+          <Text style={styles.text}>Mileage: {carDetails.mileage}</Text>
+          <Text style={styles.text}>Engine Power: {carDetails.enginePower}</Text>
+          <Text style={styles.text}>Electric: {carDetails.isElectric ? 'Yes' : 'No'}</Text>
+          <Text style={styles.text}>Price per day: ${carDetails.price}</Text>
+          <Text style={styles.text}>Tax: ${(carDetails.price * 0.13).toFixed(2)}</Text>
+        <Text style={styles.text}>Total: ${(carDetails.price * 1.13).toFixed(2)}</Text>
+        
+        <Image source={{ uri: carDetails.imageUrl }} style={styles.image} />
 
+        <View style={styles.button}>
+        <Button 
+          color='dimgray' 
+          title="Confirm your Booking" 
+          onPress={() => handleBooking()} 
+        />
+        </View>
 
-        <Text style={styles.details}>Price: ${carDetails.price}</Text>
-        <Text style={styles.details}>Tax: ${(carDetails.price * 0.13).toFixed(2)}</Text>
-        <Text style={styles.details}>Total: ${(carDetails.price * 1.13).toFixed(2)}</Text>
-
-        <Button color='dimgray' title="Confirm your Booking" onPress={() => handleBooking()} />
+        </ScrollView>
     </View>
   );
 };
@@ -66,30 +80,27 @@ const styles = StyleSheet.create({
   },
   detailsContainer: {
     height: '50%',
-    padding: 10,
-  },
-  carName: {
-    fontWeight: 'bold',
-    fontSize: 24,
-  },
-  carType: {
-    fontSize: 18,
-    color: 'grey',
+    padding: 20,
+    backgroundColor: 'black'
   },
   location: {
     fontSize: 16,
     color: 'grey',
   },
   image: {
-    height: 200,
-    resizeMode: 'cover',
+    height: 100,
     marginVertical: 10,
   },
-  details: {
-    color: 'black',
+  text: {
+    fontSize: 16,
+    marginBottom: 5,
+    color: 'lightgrey',
+    fontWeight: 'bold'
+  },
+  button: {
+    paddingHorizontal: 40,
+    paddingBottom: 50,
     fontWeight: 'bold',
-    marginLeft: 20,
-    fontSize: 20
   }
 
 });
