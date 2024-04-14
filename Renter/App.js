@@ -79,7 +79,7 @@ export default function App() {
               ),
               headerLeft: null, // If you want to remove the back button, set this to null
             })}/>
-          <Stack.Screen name="ChosenCar" component={ChosenCar} />
+          <Stack.Screen name="Book my Car" component={ChosenCar} screenOptions={{headerShown:false}}/>
          
         </Stack.Navigator>
          

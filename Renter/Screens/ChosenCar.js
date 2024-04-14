@@ -2,36 +2,41 @@ import React from 'react';
 import {useState, useEffect} from "react"
 import { View, Text, StyleSheet, Button } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
-import { collection, addDoc } from "firebase/firestore"
-import { db } from '../firebaseConfig';
+import { collection, addDoc, getDocs } from "firebase/firestore"
+import { db, auth } from '../firebaseConfig';
 
 const CarSummaryScreen = ({route}) => {
 
     const {carDetails} = route.params
     const [nextDate, setNextDate] = React.useState(null);
 
+    console.log(carDetails)
+
     useEffect(() => {
         const today = new Date();
         const tomorrow = new Date(today);
-        tomorrow.setDate(tomorrow.getDate() + 1); // Increment the day by 1
-        setNextDate(tomorrow.toDateString()); // Set the next date once when component mounts
+        tomorrow.setDate(tomorrow.getDate() + 1); 
+        setNextDate(tomorrow.toDateString()); 
     }, []); 
 
     const handleBooking = async () => {
 
         const bookingToInsert = {
             Date: nextDate,
-            status: 'confirmed'
+            Status: 'confirmed',
+            listingId: carDetails.id,
+            renterId: auth.currentUser.uid,
+            ownerId: carDetails.ownerId
         }
 
         try {
             const docRef = await addDoc(collection(db, "Reservation"), bookingToInsert)
-            alert("Data inserted, check console for output")
+            alert(`Your booking rent the car for tommorow is confirmed.\nPick up date: ${nextDate}\nPick up time: 8am to 11am\nDrop off time: 8pm to 11pm`)
             console.log(`Id of inserted document is: ${docRef.id}`)
         } catch (err) {
             console.log(err)
         }
- 
+
     }
 
 

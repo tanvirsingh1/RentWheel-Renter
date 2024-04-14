@@ -37,7 +37,7 @@ const SearchScreen = ({navigation}) => {
 
      
     const handlePress = (listing) => {
-        navigation.navigate('ChosenCar', { carDetails: listing });
+        navigation.navigate('Book my Car', { carDetails: listing });
     }
 
 
