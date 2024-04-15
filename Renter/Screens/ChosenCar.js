@@ -1,6 +1,6 @@
 import React from 'react';
 import {useState, useEffect} from "react"
-import { View, Text, StyleSheet, Button, Image, ScrollView } from 'react-native';
+import { View, Text, StyleSheet, Pressable, Image, ScrollView } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
 import { collection, addDoc, getDocs } from "firebase/firestore"
 import { db, auth } from '../firebaseConfig';
@@ -48,27 +48,37 @@ const CarSummaryScreen = ({route}) => {
         </MapView>
         
         <ScrollView style={styles.detailsContainer}>
-          <Text style={styles.text}>Make: {carDetails.carMake}</Text>
-          <Text style={styles.text}>Model: {carDetails.carModel}</Text>
-          <Text style={styles.text}>Color: {carDetails.color}</Text>
-          <Text style={styles.text}>Year: {carDetails.year}</Text>
-          <Text style={styles.text}>Capacity: {carDetails.capacity}</Text>
-          <Text style={styles.text}>Mileage: {carDetails.mileage}</Text>
-          <Text style={styles.text}>Engine Power: {carDetails.enginePower}</Text>
-          <Text style={styles.text}>Electric: {carDetails.isElectric ? 'Yes' : 'No'}</Text>
-          <Text style={styles.text}>Price per day: ${carDetails.price}</Text>
+          <Text style={styles.text}>{carDetails.color} {carDetails.carMake} {carDetails.carModel}{carDetails.isElectric ?  <Text>, Electric</Text>  : ""}</Text>
+        
+          <Image source={{ uri: carDetails.imageUrl }} style={styles.image} />
+          <View>
+
+            <Text style={styles.text}>Year: {carDetails.year}</Text>
+          <Text style={styles.text}>Capacity: {carDetails.capacity} L</Text>
+          <Text style={styles.text}>Mileage: {carDetails.mileage} km</Text>
+          <Text style={styles.text}>Engine Power: {carDetails.enginePower} HP</Text>
+          
+          </View>
+        
+        <Text style={styles.text}>Price per day: ${carDetails.price}</Text>
           <Text style={styles.text}>Tax: ${(carDetails.price * 0.13).toFixed(2)}</Text>
         <Text style={styles.text}>Total: ${(carDetails.price * 1.13).toFixed(2)}</Text>
         
-        <Image source={{ uri: carDetails.imageUrl }} style={styles.image} />
 
-        <View style={styles.button}>
-        <Button 
-          color='crimson' 
-          title="Confirm your Booking" 
-          onPress={() => handleBooking()} 
-        />
-        </View>
+      
+        <Pressable onPress={() => confirmBooking(item.id)}
+                             style={({ pressed }) => ({
+                                backgroundColor: pressed ? "#4a3a78" : "#9978f5", // Change the background color here
+                                borderRadius: 5,
+                                width: "90%",
+                                height: 50,
+                                justifyContent: "center",
+                                alignItems: "center",
+                                textAlign: "center",
+                                alignSelf:"center"
+                                })}>
+                                <Text style={{color:"white"}}>Confirm</Text>
+                            </Pressable>
 
         </ScrollView>
     </View>
@@ -92,7 +102,8 @@ const styles = StyleSheet.create({
     color: 'grey',
   },
   image: {
-    height: 100,
+    height: "100%",
+    width:"100%",
     marginVertical: 10,
   },
   text: {

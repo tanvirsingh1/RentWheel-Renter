@@ -56,7 +56,7 @@ const TabContainerComponent = () => {
             );
         }
       },
-    tabBarActiveTintColor: "green",
+      tabBarActiveTintColor: "#7C4DFF",
     tabBarInactiveTintColor: "gray",
 })}>
       <Tab.Screen name="My Reservations" component={ReservationsScreen} />
@@ -74,12 +74,12 @@ export default function App() {
           <Stack.Screen name="Rent a Wheel" component={TabContainerComponent} options={({ navigation }) => ({
               headerRight: () => (
                 <View style={{ margin: 10 }}>
-                  <Button title="Logout" onPress={() => logoutPressed(navigation)} />
+                  <Button title="Logout" onPress={() => logoutPressed(navigation)} color="red"/>
                 </View>
               ),
               headerLeft: null, // If you want to remove the back button, set this to null
             })}/>
-          <Stack.Screen name="Book my Car" component={ChosenCar} screenOptions={{headerShown:false}}/>
+          <Stack.Screen name="Book a Car" component={ChosenCar} screenOptions={{headerShown:false}}/>
          
         </Stack.Navigator>
          

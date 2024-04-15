@@ -52,10 +52,10 @@ const Reservations = ({ navigation }) => {
                              <Text style={styles.text}>Confirmation Code: {item.reservation.confirmationCode}</Text>
                             <Text >{item.reservation.Status}</Text>
                             </View>
-                            <View style={{flexDirection:"row", justifyContent:"space-between"}}>
+                            <View style={{flexDirection:"row", gap:10}}>
                                 <Image source={{ uri: item.listing.imageUrl }} style={styles.image} />
                             <View> 
-                            <Text>Renter:  <Text style={{fontWeight:"bold"}}>{item.renter.name}</Text></Text>
+                            <Text>Owner:  <Text style={{fontWeight:"bold"}}>{item.renter.name}</Text></Text>
                            <Text >{item.listing.color} {item.listing.carMake} {item.listing.carModel}</Text>
                             
                             <Text>Date: <Text style={{fontWeight:"bold"}}>{item.reservation.Date}</Text></Text>

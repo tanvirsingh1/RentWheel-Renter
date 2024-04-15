@@ -70,7 +70,7 @@ const SearchScreen = ({navigation}) => {
      
      
     const handlePress = (listing) => {
-        navigation.navigate('Book my Car', { carDetails: listing });
+        navigation.navigate('Book a Car', { carDetails: listing });
     }
 
 
