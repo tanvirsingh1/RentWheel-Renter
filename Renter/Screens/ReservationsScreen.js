@@ -50,16 +50,17 @@ const Reservations = ({ navigation }) => {
                         <View >
                             <View style={{flexDirection:"row", justifyContent:"space-between"}}>
                              <Text style={styles.text}>Confirmation Code: {item.reservation.confirmationCode}</Text>
-                            <Text >{item.reservation.Status}</Text>
+                            
                             </View>
-                            <View style={{flexDirection:"row", justifyContent:"space-between"}}>
+                            <View style={{flexDirection:"row"}}>
                                 <Image source={{ uri: item.listing.imageUrl }} style={styles.image} />
                             <View> 
-                            <Text>Renter:  <Text style={{fontWeight:"bold"}}>{item.renter.name}</Text></Text>
-                           <Text >{item.listing.color} {item.listing.carMake} {item.listing.carModel}</Text>
+                            <Text style={styles.info}>Renter:  <Text style={{fontWeight:"bold"}}>{item.renter.name}</Text></Text>
+                           <Text style={styles.info}>{item.listing.color} {item.listing.carMake} {item.listing.carModel}</Text>
                             
-                            <Text>Date: <Text style={{fontWeight:"bold"}}>{item.reservation.Date}</Text></Text>
-                            <Text>Price with Tax: <Text style={{fontWeight:"bold"}}>${item.reservation.pricePaid}</Text></Text>
+                            <Text style={styles.info}>Date: <Text style={{fontWeight:"bold"}}>{item.reservation.Date}</Text></Text>
+                            <Text style={styles.info}>Price with Tax: <Text style={{fontWeight:"bold"}}>${item.reservation.pricePaid}</Text></Text>
+                            <Text style={styles.info}>{item.reservation.Status}</Text>
                             </View>
                             
                            </View>
@@ -83,8 +84,9 @@ const styles = StyleSheet.create({
     },
     container: {
         flex: 1,
-        backgroundColor: '#fff',
-        padding: 20,
+        backgroundColor: 'gainsboro',
+        paddingVertical: 20,
+        paddingHorizontal: 30
     },
     btn: {
         borderWidth: 1,
@@ -103,7 +105,7 @@ const styles = StyleSheet.create({
     },
     text: {
         fontSize: 16,
-        paddingVertical: 4,
+        paddingVertical: 5,
         fontWeight:"bold",
     },
     image: {
@@ -114,6 +116,9 @@ const styles = StyleSheet.create({
     listItemBorder: {
         borderWidth: 1,
         borderColor: "#ccc",
-        marginVertical:5,
+        marginVertical:4,
       },
+    info: {
+        paddingLeft: 30
+    }
 });
