@@ -1,15 +1,15 @@
-import { StyleSheet, Text, View, TextInput, Switch, Pressable} from 'react-native';
+import { StyleSheet, Text, View, Button} from 'react-native';
 import {useState, useEffect} from "react"
 import MapView, {Marker} from "react-native-maps"
-import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { collection, getDocs } from "firebase/firestore"
-
-import { db, auth } from '../firebaseConfig';
+import * as Location from 'expo-location';
+import { db } from '../firebaseConfig';
 
 
 const SearchScreen = ({navigation}) => {
 
     const [listings, setListings] = useState([])
+    const [location, setLocation] = useState(null);
 
     const fetchData = async () => {
         try {           
@@ -32,9 +32,42 @@ const SearchScreen = ({navigation}) => {
     };
 
     useEffect(() => {
+        requestPermissions()
         fetchData();
       }, []);
 
+      const requestPermissions = async () => {
+        try {          
+           const permissionsObject = 
+               await Location.requestForegroundPermissionsAsync()
+           if (permissionsObject.status  === "granted") {
+               alert("Permission granted!")  
+               getCurrLocation()           
+           } else {
+               alert("Permission denied or not provided")              
+           }
+        } catch (err) {
+           console.log(err)
+        }
+    }
+ 
+
+      const getCurrLocation = async () => {
+        console.log("Getting the user's current location!")
+        try {           
+            let location = await Location.getCurrentPositionAsync({accuracy:Location.Accuracy.Balanced});           
+ 
+            console.log(`The current location is:`)
+            console.log(location)
+ 
+            setLocation(location)
+ 
+        } catch (err) {
+            console.log(err)
+        }
+    }
+ 
+     
      
     const handlePress = (listing) => {
         navigation.navigate('Book my Car', { carDetails: listing });
@@ -44,8 +77,15 @@ const SearchScreen = ({navigation}) => {
     return(
         
         <View>
+            {location &&(
            <MapView 
            style={{height:"100%", width:"100%"}}
+           initialRegion={{
+                latitude: location.coords.latitude,
+                longitude:  location.coords.longitude,
+                latitudeDelta: 0.1,
+                longitudeDelta: 0.1
+            }}
            >
 
            {
@@ -63,6 +103,7 @@ const SearchScreen = ({navigation}) => {
             }
 
            </MapView>
+            )}
        </View>
     )
    

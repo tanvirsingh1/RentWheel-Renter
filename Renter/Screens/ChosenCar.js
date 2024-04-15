@@ -64,7 +64,7 @@ const CarSummaryScreen = ({route}) => {
 
         <View style={styles.button}>
         <Button 
-          color='dimgray' 
+          color='crimson' 
           title="Confirm your Booking" 
           onPress={() => handleBooking()} 
         />
@@ -85,7 +85,7 @@ const styles = StyleSheet.create({
   detailsContainer: {
     height: '50%',
     padding: 20,
-    backgroundColor: 'black'
+    backgroundColor: 'white'
   },
   location: {
     fontSize: 16,
@@ -98,7 +98,7 @@ const styles = StyleSheet.create({
   text: {
     fontSize: 16,
     marginBottom: 5,
-    color: 'lightgrey',
+    color: 'black',
     fontWeight: 'bold'
   },
   button: {
