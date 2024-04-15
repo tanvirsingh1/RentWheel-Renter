@@ -50,7 +50,7 @@ const Reservations = ({ navigation }) => {
                         <View >
                             <View style={{flexDirection:"row", justifyContent:"space-between"}}>
                              <Text style={styles.text}>Confirmation Code: {item.reservation.confirmationCode}</Text>
-                            <Text >{item.reservation.Status}</Text>
+                            
                             </View>
                             <View style={{flexDirection:"row", gap:10}}>
                                 <Image source={{ uri: item.listing.imageUrl }} style={styles.image} />
@@ -58,8 +58,9 @@ const Reservations = ({ navigation }) => {
                             <Text>Owner:  <Text style={{fontWeight:"bold"}}>{item.renter.name}</Text></Text>
                            <Text >{item.listing.color} {item.listing.carMake} {item.listing.carModel}</Text>
                             
-                            <Text>Date: <Text style={{fontWeight:"bold"}}>{item.reservation.Date}</Text></Text>
-                            <Text>Price with Tax: <Text style={{fontWeight:"bold"}}>${item.reservation.pricePaid}</Text></Text>
+                            <Text style={styles.info}>Date: <Text style={{fontWeight:"bold"}}>{item.reservation.Date}</Text></Text>
+                            <Text style={styles.info}>Price with Tax: <Text style={{fontWeight:"bold"}}>${item.reservation.pricePaid}</Text></Text>
+                            <Text style={styles.info}>{item.reservation.Status}</Text>
                             </View>
                             
                            </View>
@@ -78,13 +79,14 @@ export default Reservations;
 
 const styles = StyleSheet.create({
     body: {
-        backgroundColor: "#000",
+   
         flex: 1,
     },
     container: {
         flex: 1,
+        paddingVertical: 20,
+        paddingHorizontal: 30,
         backgroundColor: '#fff',
-        padding: 20,
     },
     btn: {
         borderWidth: 1,
@@ -103,7 +105,7 @@ const styles = StyleSheet.create({
     },
     text: {
         fontSize: 16,
-        paddingVertical: 4,
+        paddingVertical: 5,
         fontWeight:"bold",
     },
     image: {
@@ -114,6 +116,9 @@ const styles = StyleSheet.create({
     listItemBorder: {
         borderWidth: 1,
         borderColor: "#ccc",
-        marginVertical:5,
+        marginVertical:4,
       },
+    info: {
+        paddingLeft: 30
+    }
 });
