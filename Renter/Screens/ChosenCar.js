@@ -1,6 +1,6 @@
 import React from 'react';
 import {useState, useEffect} from "react"
-import { View, Text, StyleSheet, Pressable, Image, ScrollView } from 'react-native';
+import { View, Text, StyleSheet, Button, Image, ScrollView } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
 import { collection, addDoc, getDocs } from "firebase/firestore"
 import { db, auth } from '../firebaseConfig';
@@ -57,13 +57,8 @@ const CarSummaryScreen = ({route}) => {
         
         <ScrollView style={styles.detailsContainer}>
         <Image source={{ uri: carDetails.imageUrl }} style={styles.image} />
-          <Text style={styles.text}>{carDetails.carMake} - {carDetails.carModel}</Text>
-          <Text style={styles.text}>Color: {carDetails.color}</Text>
+          <Text style={styles.text}>{carDetails.color} {carDetails.carMake} {carDetails.carModel}{carDetails.isElectric ? ', Electric' : ''}</Text>
           <Text style={styles.text}>Year: {carDetails.year}</Text>
-          
-          <Text style={styles.text}>Electric: {carDetails.isElectric ? 'Yes' : 'No'}</Text>
-          
-
                     <View
                         style={{
                             flex: 1,
@@ -95,20 +90,13 @@ const CarSummaryScreen = ({route}) => {
             <Text style={styles.price}>Total: ${(carDetails.price * 1.13).toFixed(2)}</Text>
             </View>
 
-      
-        <Pressable onPress={() => confirmBooking(item.id)}
-                             style={({ pressed }) => ({
-                                backgroundColor: pressed ? "#4a3a78" : "#9978f5", // Change the background color here
-                                borderRadius: 5,
-                                width: "90%",
-                                height: 50,
-                                justifyContent: "center",
-                                alignItems: "center",
-                                textAlign: "center",
-                                alignSelf:"center"
-                                })}>
-                                <Text style={{color:"white"}}>Confirm</Text>
-                            </Pressable>
+        <View style={styles.button}>
+        <Button 
+          color='#9978f5' 
+          title="Confirm your Booking" 
+          onPress={() => handleBooking()} 
+        />
+        </View>
 
         </ScrollView>
         
@@ -123,7 +111,7 @@ const styles = StyleSheet.create({
   detailsContainer: {
     height: '50%',
     padding: 20,
-    backgroundColor: 'gainsboro'
+    backgroundColor: 'white'
   },
   box:{
     backgroundColor:'darkslategrey',
@@ -143,8 +131,7 @@ const styles = StyleSheet.create({
     color: 'grey',
   },
   image: {
-    height: "100%",
-    width:"100%",
+    height: 100,
     marginVertical: 10,
   },
   text: {
@@ -270,4 +257,7 @@ icon: {
 
 });
 
+
+
 export default CarSummaryScreen;
+   
