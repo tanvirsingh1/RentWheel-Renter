@@ -5,9 +5,9 @@ import MapView, { Marker } from 'react-native-maps';
 import { collection, addDoc, getDocs } from "firebase/firestore"
 import { db, auth } from '../firebaseConfig';
 import { FontAwesome5 } from "@expo/vector-icons";
-import { Entypo } from "@expo/vector-icons";
 
-const CarSummaryScreen = ({route}) => {
+
+const CarSummaryScreen = ({route, navigation}) => {
 
     const {carDetails} = route.params
     const [nextDate, setNextDate] = React.useState(null);
@@ -25,7 +25,7 @@ const CarSummaryScreen = ({route}) => {
 
         const bookingToInsert = {
             Date: nextDate,
-            Status: 'confirmed',
+            Status: 'Confirmed',
             listingId: carDetails.id,
             renterId: auth.currentUser.uid,
             ownerId: carDetails.ownerId,
@@ -37,6 +37,7 @@ const CarSummaryScreen = ({route}) => {
             const docRef = await addDoc(collection(db, "Reservation"), bookingToInsert)
             alert(`Your booking to rent the car for tommorow is confirmed.\nPick up date: ${nextDate}\nPick up time: 8am to 11am\nDrop off time: 8pm to 11pm`)
             console.log(`Id of inserted document is: ${docRef.id}`)
+            navigation.navigate("Search")
         } catch (err) {
             console.log(err)
         }
@@ -132,7 +133,7 @@ const styles = StyleSheet.create({
   },
   image: {
     height: 100,
-    marginVertical: 10,
+    marginVertical: 5,
   },
   text: {
     fontSize: 16,

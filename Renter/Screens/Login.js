@@ -40,7 +40,7 @@ const LoginScreen = ({navigation}) => {
 
                     } else if (docSnap.data() === undefined) {
                       // log user out if it is not an owner account
-                     console.log("aaa")
+                    
                       await signOut(auth)
                     }
                  } catch (err) {
