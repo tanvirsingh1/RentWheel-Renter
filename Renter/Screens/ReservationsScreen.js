@@ -49,8 +49,9 @@ const Reservations = ({ navigation }) => {
                     renderItem={({ item }) => (
                         <View >
                             <View style={{flexDirection:"row", justifyContent:"space-between"}}>
+                           
                              <Text style={styles.text}>Confirmation Code: {item.reservation.confirmationCode}</Text>
-                            
+                             <Text style={styles.info}>{item.reservation.Status}</Text>
                             </View>
                             <View style={{flexDirection:"row", gap:10}}>
                                 <Image source={{ uri: item.listing.imageUrl }} style={styles.image} />
@@ -60,7 +61,7 @@ const Reservations = ({ navigation }) => {
                             
                             <Text style={styles.info}>Date: <Text style={{fontWeight:"bold"}}>{item.reservation.Date}</Text></Text>
                             <Text style={styles.info}>Price with Tax: <Text style={{fontWeight:"bold"}}>${item.reservation.pricePaid}</Text></Text>
-                            <Text style={styles.info}>{item.reservation.Status}</Text>
+                            
                             </View>
                             
                            </View>

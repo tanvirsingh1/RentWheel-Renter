@@ -73,9 +73,9 @@ export default function App() {
         <Stack.Screen name="Login" component={LoginScreen}/>
           <Stack.Screen name="Rent a Wheel" component={TabContainerComponent} options={({ navigation }) => ({
               headerRight: () => (
-                <View style={{ margin: 10 }}>
+             
                   <Button title="Logout" onPress={() => logoutPressed(navigation)} color="red"/>
-                </View>
+                
               ),
               headerLeft: null, // If you want to remove the back button, set this to null
             })}/>
