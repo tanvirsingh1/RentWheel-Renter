@@ -79,14 +79,14 @@ export default Reservations;
 
 const styles = StyleSheet.create({
     body: {
-        backgroundColor: "#000",
+   
         flex: 1,
     },
     container: {
         flex: 1,
-        backgroundColor: 'gainsboro',
         paddingVertical: 20,
-        paddingHorizontal: 30
+        paddingHorizontal: 30,
+        backgroundColor: '#fff',
     },
     btn: {
         borderWidth: 1,
